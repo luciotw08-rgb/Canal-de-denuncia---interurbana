@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canal de Denuncias — Interurbana</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; font-size: 15px; line-height: 1.6; }
+.container { max-width: 680px; margin: 0 auto; padding: 24px 16px 48px; }
+.header { background: #fff; border-radius: 12px; border: 1px solid #e0e0e0; padding: 24px; margin-bottom: 20px; }
+.logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.logo-dot { width: 32px; height: 32px; border-radius: 8px; background: #1a73e8; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 600; }
+.empresa { font-size: 13px; color: #5f6368; }
+h1 { font-size: 20px; font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+.intro { font-size: 13px; color: #5f6368; line-height: 1.6; }
+.anon-banner { background: #e8f0fe; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #1a73e8; margin-top: 12px; }
+.legal-box { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #5f6368; margin-top: 10px; line-height: 1.5; }
+.section-label { font-size: 11px; font-weight: 600; color: #5f6368; text-transform: uppercase; letter-spacing: 0.06em; margin: 24px 0 10px; padding-bottom: 8px; border-bottom: 1px solid #e0e0e0; }
+.card { background: #fff; border-radius: 12px; border: 1px solid #e0e0e0; padding: 16px 20px; margin-bottom: 10px; }
+.card.error { border-color: #d93025; }
+.field-label { font-size: 13px; font-weight: 500; color: #1a1a1a; margin-bottom: 10px; }
+.hint { font-size: 12px; color: #9aa0a6; margin-top: -6px; margin-bottom: 10px; }
+.options { display: flex; flex-wrap: wrap; gap: 6px; }
+.opt-label { display: flex; align-items: center; gap: 6px; padding: 7px 14px; border: 1px solid #dadce0; border-radius: 20px; cursor: pointer; font-size: 13px; color: #3c4043; background: #fff; transition: all 0.15s; user-select: none; }
+.opt-label:hover { border-color: #1a73e8; color: #1a73e8; background: #f0f4ff; }
+.opt-label.selected { border-color: #1a73e8; color: #1a73e8; background: #e8f0fe; font-weight: 500; }
+.opt-label input { display: none; }
+.type-card { background: #fff; border-radius: 12px; border: 2px solid #dadce0; padding: 18px 20px; margin-bottom: 12px; cursor: pointer; transition: all 0.15s; }
+.type-card:hover { border-color: #1a73e8; }
+.type-card.selected { border-color: #1a73e8; background: #e8f0fe; }
+.type-title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+.type-desc { font-size: 13px; color: #5f6368; }
+textarea, input[type=text], input[type=date] { width: 100%; padding: 10px 12px; border: 1px solid #dadce0; border-radius: 8px; font-size: 14px; font-family: inherit; color: #1a1a1a; background: #fff; }
+textarea { min-height: 110px; resize: vertical; }
+textarea:focus, input:focus { outline: none; border-color: #1a73e8; }
+.btn-primary { width: 100%; padding: 14px; font-size: 15px; font-weight: 600; background: #1a73e8; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 20px; }
+.btn-primary:hover { background: #1557b0; }
+.btn-secondary { width: 100%; padding: 12px; font-size: 14px; font-weight: 500; background: #fff; color: #1a73e8; border: 1px solid #dadce0; border-radius: 10px; cursor: pointer; margin-top: 10px; }
+.error-msg { font-size: 12px; color: #d93025; margin-top: 16px; text-align: center; display: none; }
+.hidden { display: none; }
+.done-box { background: #fff; border-radius: 12px; border: 1px solid #e0e0e0; padding: 32px 24px; text-align: center; }
+.done-icon { font-size: 40px; margin-bottom: 12px; }
+.done-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+.done-text { font-size: 13px; color: #5f6368; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="logo-row">
+    <div class="logo-dot">CI</div>
+    <span class="empresa">Constructora Interurbana S.A.</span>
+  </div>
+  <h1>Canal de Denuncias</h1>
+  <p class="intro">A través de este canal puedes poner en conocimiento de la empresa situaciones de conflicto, acoso o discriminación, así como incidencias relacionadas con el derecho a la desconexión digital.</p>
+  <div class="anon-banner">&#128274; Este canal es <strong>ANÓNIMO</strong>. No se solicita ni se registra tu nombre, DNI ni ningún dato que permita identificarte.</div>
+  <div class="legal-box">La información facilitada se tratará con la debida confidencialidad y se utilizará exclusivamente para analizar y, en su caso, dar respuesta a los hechos comunicados, conforme a los protocolos internos de la empresa.</div>
+</div>
+
+<!-- PASO 1: elegir tipo -->
+<div id="step-tipo">
+  <div class="section-label">¿Qué tipo de denuncia querés realizar?</div>
+  <div class="type-card" id="tipo-acoso" onclick="elegirTipo('acoso')">
+    <div class="type-title">Conflicto, acoso o discriminación</div>
+    <div class="type-desc">Situaciones de acoso psicosocial, sexual, por razón de sexo o discriminación LGBTI, conflicto interpersonal u otras discriminaciones.</div>
+  </div>
+  <div class="type-card" id="tipo-digital" onclick="elegirTipo('digital')">
+    <div class="type-title">Desconexión digital</div>
+    <div class="type-desc">Incidencias relacionadas con el incumplimiento del Protocolo de Desconexión Digital de la empresa.</div>
+  </div>
+</div>
+
+<!-- PASO 2a: formulario ACOSO -->
+<div id="form-acoso" class="hidden">
+  <div class="section-label">Solicitud de intervención</div>
+
+  <div class="card" id="f_rol">
+    <div class="field-label">¿En calidad de qué realizás esta comunicación?</div>
+    <div class="options">
+      <label class="opt-label" onclick="pick('rol','Persona afectada',this)"><input type="radio" name="rol">Persona afectada</label>
+      <label class="opt-label" onclick="pick('rol','Testigo',this)"><input type="radio" name="rol">Testigo</label>
+      <label class="opt-label" onclick="pick('rol','Otros',this)"><input type="radio" name="rol">Otros</label>
+    </div>
+  </div>
+
+  <div class="card" id="f_tipoacoso">
+    <div class="field-label">Tipo de acoso o conflicto</div>
+    <div class="options">
+      <label class="opt-label" onclick="pick('tipoAcoso','Laboral',this)"><input type="radio" name="tipoAcoso">Laboral</label>
+      <label class="opt-label" onclick="pick('tipoAcoso','Sexual',this)"><input type="radio" name="tipoAcoso">Sexual</label>
+      <label class="opt-label" onclick="pick('tipoAcoso','Razón de sexo o discriminación LGBTI',this)"><input type="radio" name="tipoAcoso">Razón de sexo o discriminación LGBTI</label>
+      <label class="opt-label" onclick="pick('tipoAcoso','Discriminación',this)"><input type="radio" name="tipoAcoso">Discriminación</label>
+      <label class="opt-label" onclick="pick('tipoAcoso','Conflicto interpersonal',this)"><input type="radio" name="tipoAcoso">Conflicto interpersonal</label>
+      <label class="opt-label" onclick="pick('tipoAcoso','Otras discriminaciones',this)"><input type="radio" name="tipoAcoso">Otras discriminaciones</label>
+    </div>
+  </div>
+
+  <div class="card" id="f_centro">
+    <div class="field-label">Centro de trabajo / obra</div>
+    <input type="text" id="in_centro" placeholder="Ej: Obra Embajada de Suecia">
+  </div>
+
+  <div class="card" id="f_fecha_acoso">
+    <div class="field-label">Fecha del hecho</div>
+    <input type="date" id="in_fecha_acoso">
+  </div>
+
+  <div class="card" id="f_testigo">
+    <div class="field-label">¿Hubo testigos?</div>
+    <div class="options">
+      <label class="opt-label" onclick="pick('testigo','Sí',this)"><input type="radio" name="testigo">Sí</label>
+      <label class="opt-label" onclick="pick('testigo','No',this)"><input type="radio" name="testigo">No</label>
+    </div>
+  </div>
+
+  <div class="card" id="f_ocupacion">
+    <div class="field-label">Tipo de ocupación que desarrollás</div>
+    <input type="text" id="in_ocupacion" placeholder="Ej: Oficial de obra, administrativo, jefe de obra...">
+    <div class="hint">No indiques tu nombre, solo el puesto/rol, para preservar el anonimato.</div>
+  </div>
+
+  <div class="card" id="f_desc_acoso">
+    <div class="field-label">Descripción de los hechos</div>
+    <textarea id="in_desc_acoso" placeholder="Describe con el mayor detalle posible qué ocurrió, cuándo y quiénes estuvieron implicados..."></textarea>
+  </div>
+
+  <button class="btn-primary" onclick="enviarAcoso()">Enviar denuncia</button>
+  <button class="btn-secondary" onclick="volver()">Volver</button>
+  <p class="error-msg" id="err-acoso">&#9888; Completa el tipo de acoso y la descripción de los hechos antes de continuar.</p>
+</div>
+
+<!-- PASO 2b: formulario DESCONEXIÓN DIGITAL -->
+<div id="form-digital" class="hidden">
+  <div class="section-label">Comunicación de incidencia — Desconexión digital</div>
+
+  <div class="card" id="f_puesto">
+    <div class="field-label">Puesto de trabajo</div>
+    <input type="text" id="in_puesto" placeholder="Ej: Jefe de obra, administrativo...">
+    <div class="hint">No indiques tu nombre, solo el puesto, para preservar el anonimato.</div>
+  </div>
+
+  <div class="card" id="f_fecha_digital">
+    <div class="field-label">Fecha del hecho</div>
+    <input type="date" id="in_fecha_digital">
+  </div>
+
+  <div class="card" id="f_desc_digital">
+    <div class="field-label">Descripción de los hechos</div>
+    <textarea id="in_desc_digital" placeholder="Describe de la forma más detallada posible los hechos contrarios al Protocolo de Desconexión Digital: fechas, horarios, personas implicadas y cualquier otra información relevante..."></textarea>
+  </div>
+
+  <div class="card" id="f_implicados">
+    <div class="field-label">Personas implicadas (rol/cargo, no nombres)</div>
+    <input type="text" id="in_implicados" placeholder="Ej: Responsable de obra">
+  </div>
+
+  <button class="btn-primary" onclick="enviarDigital()">Enviar denuncia</button>
+  <button class="btn-secondary" onclick="volver()">Volver</button>
+  <p class="error-msg" id="err-digital">&#9888; Completa la descripción de los hechos antes de continuar.</p>
+</div>
+
+<!-- CONFIRMACIÓN -->
+<div id="done" class="hidden">
+  <div class="done-box">
+    <div class="done-icon">&#9989;</div>
+    <div class="done-title">Denuncia enviada</div>
+    <div class="done-text">Tu comunicación se ha registrado de forma anónima. Será analizada conforme a los protocolos internos de la empresa.<br><br>Ya puedes cerrar esta ventana.</div>
+  </div>
+</div>
+
+</div>
+<script>
+var SHEET_URL = 'https://script.google.com/macros/s/AKfycbx-nczyi1bceghLH68Vk4BvVSIDQK3PewfdUdW0yYPwlREAtgA2XSH4oH68QNYs1Fvo7A/exec';
+
+var vals = {};
+
+function pick(campo, valor, el) {
+  vals[campo] = valor;
+  var parent = el.parentElement;
+  var siblings = parent.getElementsByClassName('opt-label');
+  for (var i = 0; i < siblings.length; i++) siblings[i].classList.remove('selected');
+  el.classList.add('selected');
+}
+
+function elegirTipo(tipo) {
+  document.getElementById('step-tipo').classList.add('hidden');
+  if (tipo === 'acoso') {
+    document.getElementById('form-acoso').classList.remove('hidden');
+  } else {
+    document.getElementById('form-digital').classList.remove('hidden');
+  }
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function volver() {
+  document.getElementById('form-acoso').classList.add('hidden');
+  document.getElementById('form-digital').classList.add('hidden');
+  document.getElementById('step-tipo').classList.remove('hidden');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function enviarDatos(data) {
+  var iframe = document.createElement('iframe');
+  iframe.name = 'hidden_frame_' + Date.now();
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+
+  var form = document.createElement('form');
+  form.method = 'POST';
+  form.action = SHEET_URL;
+  form.target = iframe.name;
+  form.style.display = 'none';
+  form.enctype = 'application/x-www-form-urlencoded';
+
+  Object.keys(data).forEach(function(key) {
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = data[key];
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+  form.submit();
+
+  setTimeout(function() {
+    if (form.parentNode) document.body.removeChild(form);
+    if (iframe.parentNode) document.body.removeChild(iframe);
+  }, 5000);
+}
+
+function mostrarError(id) {
+  document.getElementById(id).style.display = 'block';
+}
+
+function ocultarError(id) {
+  document.getElementById(id).style.display = 'none';
+}
+
+function mostrarDone() {
+  document.getElementById('form-acoso').classList.add('hidden');
+  document.getElementById('form-digital').classList.add('hidden');
+  document.getElementById('done').classList.remove('hidden');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function enviarAcoso() {
+  var desc = document.getElementById('in_desc_acoso').value.trim();
+  if (!vals.tipoAcoso || !desc) {
+    mostrarError('err-acoso');
+    return;
+  }
+  ocultarError('err-acoso');
+  var data = {
+    timestamp: new Date().toLocaleString('es-ES'),
+    tipoDenuncia: 'Conflicto/Acoso',
+    rol: vals.rol || '',
+    tipoAcoso: vals.tipoAcoso || '',
+    centroTrabajo: document.getElementById('in_centro').value,
+    fechaHecho: document.getElementById('in_fecha_acoso').value,
+    testigos: vals.testigo || '',
+    ocupacion: document.getElementById('in_ocupacion').value,
+    descripcion: desc
+  };
+  enviarDatos(data);
+  mostrarDone();
+}
+
+function enviarDigital() {
+  var desc = document.getElementById('in_desc_digital').value.trim();
+  if (!desc) {
+    mostrarError('err-digital');
+    return;
+  }
+  ocultarError('err-digital');
+  var data = {
+    timestamp: new Date().toLocaleString('es-ES'),
+    tipoDenuncia: 'Desconexión Digital',
+    puesto: document.getElementById('in_puesto').value,
+    fechaHecho: document.getElementById('in_fecha_digital').value,
+    descripcion: desc,
+    personasImplicadas: document.getElementById('in_implicados').value
+  };
+  enviarDatos(data);
+  mostrarDone();
+}
+</script>
+</body>
+</html>
